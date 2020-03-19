@@ -1,6 +1,7 @@
 import { Injectable, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { HTTP } from '@ionic-native/http/ngx';
 
 @Injectable({ providedIn: 'root' })
@@ -18,7 +19,9 @@ export class AppService {
     let request: Observable<any>;
     if (useNativeHttp) {
       this.nativeHttp.setDataSerializer('multipart');
-      request = from(this.nativeHttp.post(url, formData, {}));
+      request = from(this.nativeHttp.post(url, formData, {})).pipe(
+        map(res => JSON.parse(res.data))
+      );
     } else {
       request = this.http.post(url, formData);
     }
