@@ -1,0 +1,10 @@
+<form [formGroup]="form">
+  <input type="file" (change)="fileChange($event.target.files)" />
+
+  <button type="button" (click)="onClick()">Use httpClient</button>
+  <button type="button" (click)="onClick(true)">Use advanced http</button>
+</form>
+
+<code *ngIf="response">
+  {{ response | json }}
+</code>
